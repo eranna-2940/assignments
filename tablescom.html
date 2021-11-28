@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>
+            Mark All As Complete
+        </title>
+    </head>
+
+    <body>
+        <div id="root">
+
+        </div>
+
+        <script src="https://unpkg.com/react@16/umd/react.development.js"></script>
+        <script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
+        <script src="https://unpkg.com/babel-standalone@6.26.0/babel.js"></script>
+
+        <script type="text/babel">
+            const rootHandle = document.getElementById('root')
+
+            const {useState} = React
+
+            const App = (props) => {
+                return (
+                    <div>
+                        <h1>Mark All As Complete</h1>
+                        <TaskTable/>    
+                    </div>
+                )
+            }
+
+            const TaskTable = (props) => {
+                const tasks = [
+                    { id: 1, title: 'get the website live', completed: true },
+                    { id: 2, title: 'work on user validation', completed: false },
+                    { id: 3, title: 'Automate the deployment process', completed: false }
+                ]
+
+                const [select, setSelect] = useState(false)
+
+                const handleSelectChange = (e) => {
+                    setSelect(!select)
+                }
+                
+                return (
+                    <table border="1px">
+                        <thead>
+                            <tr>
+                                <th>
+                                    <form>
+                                        <input type="checkbox" checked={select} onChange={handleSelectChange}/>    
+                                    </form>    
+                                </th>  
+                                <th>Title</th>
+                                <th>Status</th>  
+                            </tr>
+                        </thead>  
+                        <tbody>
+                            {tasks.map((ele) => {
+                                const {id, title, completed} = ele
+                                return (
+                                    <tr key={id}>
+                                        <td>
+                                            <form>
+                                                <input type="checkbox" checked={select} disabled={true}/>    
+                                            </form>
+                                        </td>
+                                        <td>{title}</td>    
+                                        {select ? <td>completed</td> : <td>pending</td>}
+
+
+
+
+
+                                    </tr>
+                                )
+                            })}    
+                        </tbody>  
+                    </table>
+                )
+            }
+
+            ReactDOM.render(<App/>, rootHandle)
+        </script>
+    </body>
+</html>
+
+

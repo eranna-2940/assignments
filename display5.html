@@ -1,0 +1,48 @@
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>
+            Display users
+        </title>
+    </head>
+    <body>
+        <div id="root">
+
+        </div>
+            <script crossorigin src="https://unpkg.com/react@16/umd/react.development.js"></script>
+            <script crossorigin src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
+            <script crossorigin src="https://unpkg.com/babel-standalone@6.26.0/babel.js"></script>
+
+        
+        <script type="text/babel">
+           const rootHandle = document.getElementById('root')
+        //   You are provided with an array of colors
+          //The array contains objects, with each object having a property color & symbols
+         // You will need to display the color name in heading tag (h3) and all the symbols need to be displayed in a paragaraph (p)
+              
+const colors = [
+   { color: 'red', symbols: ['energy', 'strength', 'power', 'courage'] },
+   { color: 'blue', symbols: ['loyalty', 'trust', 'stability', 'confidence']},
+   { color: 'orange', symbols: ['excitment', 'fun', 'haste', 'action']},
+   { color: 'yellow', symbols: ['cheerfulness', 'happiness', 'joy', 'optimism']}
+]
+    
+             const ele = (
+                 <div>
+                        <h2>Colors and its symbols </h2>
+                        
+                         {colors.map(function(ele){
+                             return( 
+                                 <p style = {{left: 30}}><h3>{ele.color.toUpperCase()}</h3>{ele.symbols.join(' , ')}</p>
+                                   
+                             )
+                             
+                         })}
+                    </div>
+             )
+            
+            ReactDOM.render(ele, rootHandle)
+        </script>
+    </body>
+</html>

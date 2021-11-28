@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>
+            Display color
+        </title>
+    </head>
+    <body>
+        <div id="root">
+
+        </div>
+           <script crossorigin src="https://unpkg.com/react@16/umd/react.development.js"></script>
+           <script crossorigin src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
+           <script crossorigin src="https://unpkg.com/babel-standalone@6.26.0/babel.js"></script>
+
+
+        <script type="text/babel">
+           const rootHandle = document.getElementById('root')
+          // You are given an object which contains a single color
+          // Display the color and its significance in a heading
+     const colors = {
+       Red: ['energy', 'strength', 'power', 'courage']
+     }
+             const ele = (
+                 <div>
+                      
+                        {Object.keys(colors).map(ele=>{
+                             return <h1> {ele} - {colors[ele].join(' , ')}</h1>
+                                                               
+                                })}
+                        
+                    
+                    </div>
+             )
+            
+            ReactDOM.render(ele, rootHandle)
+        </script>
+    </body>
+</html>

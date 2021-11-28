@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>
+            Show progress
+        </title>
+    </head>
+    <body>
+        <div id="root">
+
+        </div>
+
+        <script crossorigin src="https://unpkg.com/react@16/umd/react.development.js"></script>
+        <script crossorigin src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
+        <script crossorigin src="https://unpkg.com/babel-standalone@6.26.0/babel.js"></script>
+
+        <script type="text/babel">
+        
+           const rootHandle = document.getElementById('root')
+           
+           const {useState}=React
+
+     function TaskContainer(props){
+             const{tasks}=props
+             const[allTasks,setAllTasks]=useState(tasks)
+
+           const totalTasksLength=allTasks.length
+           const intialProgress=getCompeltedTasks(allTasks)
+
+           const [progress,setProgress]=useState(intialProgress)
+
+        const handleSetAllTasksUpdation=(arr)=>{
+         setAllTasks(arr)
+         const newCompeletedTasks=getCompeltedTasks(arr)
+         setProgress(newCompeletedTasks)
+     }
+     return(
+         <div>
+             <h2>Listing tasks - {allTasks.length}</h2>
+             <progressBar totalTasksLength={totalTasksLength} progrees={progrees} />
+             <tasklist allTasks={allTasks} handleSetAllTasksUpdation={handleSetAllTasksUpdation}/>
+             
+             
+             </div>
+     )
+ }
+            function App(props){
+                  const [tasks, setTasks] = useState ([
+
+​                           { id: 1, title: 'get the website live', completed: true },
+​                           { id: 2, title: 'work on user validation', completed: false },
+​                            { id: 3, title: 'Automate the deployment process', completed: false }.
+
+                           ])
+             
+
+                return(
+                    <TaskContainer tasks={tasks}/>
+                )
+
+            }
+          ReactDOM.render(<App/>, rootHandle)
+
+        </script>
+    </body>
+</html>

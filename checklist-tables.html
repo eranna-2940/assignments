@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>
+            Sample Title 
+        </title>
+    </head>
+    <body>
+        <div id="root">
+
+        </div>
+        <script crossorigin src="https://unpkg.com/react@16/umd/react.development.js"></script>
+        <script crossorigin src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
+        <script crossorigin src="https://unpkg.com/babel-standalone@6.26.0/babel.js"></script>
+
+        <script type="text/babel">
+           const rootHandle = document.getElementById('root')
+           const {useState} = React
+
+           function EmployeeLists(props){
+               const {users} = props
+               return (
+                   <div>
+                        <ul>
+                            {users.map((ele)=>{
+                                return (
+                                    <li key ={ele.id}>{ele.name} - {ele.email}</li>
+                                )
+                            })}
+                            </ul>
+                    </div>
+               )
+           }
+           function EmployeeTable(props){
+               const {users} = props
+               return (
+                   <div>
+                       <table border = "1">
+                            <thead>
+                                  <th>#</th>
+                                  <th>name</th>
+                                  <th>email</th>
+                                </thead>
+                                <tbody>
+                                    {users.map((ele)=>{
+                                         return (
+                                             <tr key ={ele.id}>
+                                                <td>{ele.id}</td>
+                                                <td>{ele.name}</td>
+                                                <td>{ele.email}</td>
+                                                </tr>
+                                             
+                                         )
+                                    })}
+                                    
+                                    
+                                    
+                                    
+                                    </tbody>
+                        
+                        
+                        </table>
+                    
+                    
+                    
+                    </div>
+               )
+           }
+
+           function EmployeeContainer(props){
+               const {users, setUsers} = props
+               const [selected, setSelected] = useState('list')
+               
+               
+               const handleusers = (e) =>{
+                   const input =e.target.value
+                   setSelected(input)
+               }
+                 return (
+                     <div>
+                          <form>
+                               <input type = "radio" name="selected" value ='list' checked = {selected == 'list'} onChange = {handleusers}/>list
+                               <input type = "radio" name="selected" value ='table' checked = {selected == 'table'} onChange = {handleusers}/>table
+                            </form>
+                            {   ((selected === 'list')?
+                        <EmployeeLists users = {users}/>:
+                        <EmployeeTable users = {users}/>)
+                        
+                            }
+                        </div>
+                 )
+
+           }
+
+           function App(props){
+               const [users, setUsers] = useState([
+
+               { id: 1, name: 'emp11', email: 'emp11@gmail.com'},
+               { id: 2, name: 'emp12', email: 'emp112@gmail.com'},
+               { id: 3, name: 'emp13', email: 'emp13@gmail.com'},
+               { id: 4, name: 'emp14', email: 'emp14@gmail.com'}
+
+
+
+               ])
+           
+
+            return (
+                <div>
+                    <h2>Listing Employees - {users.length}</h2><hr/>
+                    <EmployeeContainer users = {users} setUsers = {setUsers}/>
+                    
+                    
+                    </div>
+            )
+
+                } 
+                ReactDOM.render(<App />,rootHandle)
+    </script>
+  
+      
+  </body> 
+</html>   

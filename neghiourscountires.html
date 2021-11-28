@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>
+            Show info of selected user
+        </title>
+    </head>
+
+    <body>
+        <div id="root">
+
+        </div>
+
+        <script src="https://unpkg.com/react@16/umd/react.development.js"></script>
+        <script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
+        <script src="https://unpkg.com/babel-standalone@6.26.0/babel.js"></script>
+        <script src="https://unpkg.com/axios@0.21.4/dist/axios.min.js"></script>  
+
+        <script type="text/babel">
+            const rootHandle = document.getElementById('root')
+            const url = 'https://restcountries.com/v2/all'
+            const {useState, useEffect} = React
+
+            const UserInfo = (props) => {
+                const [restCountries, setRestCountries] = useState("")
+                const [selection, setSelection] = useState('')
+
+                useEffect(() => {
+                    axios.get(url)
+                        .then((response) => {
+                            // console.log(response.data)
+                            const result = response.data
+                            setRestCountries(result)
+                        })
+
+                        .catch((err) => {
+                            console.log(err.message)
+                        })
+                }, [])
+
+                const handleSelectionChange = (e) => {
+                    const selectedInput = e.target.value
+                    setSelection(selectedInput)
+                }
+
+                return (
+                    <div>
+                        <form>
+                                <select value={selection} onChange={handleSelectionChange}>
+
+                                <option> Select </option>
+
+                            {
+                             data.map(function(ele,index){
+                                        // Object Destructuring - ES6
+                                        const{name} = ele;
+
+                                        return(
+                                            <option value={name} key={index}>{name} </option>
+                                        )
+                                    })
+
+                                }
+                            </select>    
+                        </form>
+                        
+                    </div>
+                )
+            }
+
+            ReactDOM.render(<UserInfo/>, rootHandle)
+        </script>
+    </body>
+</html>

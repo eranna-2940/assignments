@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>
+            Find Id
+        </title>
+    </head>
+    <body>
+        <div id="root">
+
+        </div>
+        <script crossorigin src="https://unpkg.com/react@16/umd/react.development.js"></script>
+        <script crossorigin src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
+        <script crossorigin src="https://unpkg.com/babel-standalone@6.26.0/babel.js"></script>
+
+        <script type="text/babel">
+            //Create a component FindElement
+            // You are provided with an array of tasks
+            // Pass this data to the component via a prop called as data
+           // The component renders a button "Find Record by ID"
+           // Take the id as an input using the prompt() method
+           // If the element is found, then display the title and its completion status, else display task with id not found
+         const tasks = [
+             { id: 1, title: 'Task 1', isCompleted: true },
+             { id: 2, title: 'Task 2', isCompleted: true },
+             { id: 3, title: 'Task 3', isCompleted: false }
+          ] 
+
+
+           function Findlists(props){
+
+
+                  const findtasks = () => {
+                       const input = prompt('Enter a id')
+                      const task = props.tasks.find((task)=>{
+                          return task.id === Number(input)
+                      })
+
+
+                      if(task){
+                          alert(`${task.title} - ${task.isCompleted}`)
+                      }else{
+                          alert(`#${input}`)
+                      }
+
+                  }
+
+
+
+
+               return(
+                   <div>
+                       
+                      <button onClick={findtasks}>Find Record by id</button>
+                    
+                    
+                    </div>
+               )
+           }
+           
+           ReactDOM.render(<Findlists tasks ={tasks}/>,document.getElementById('root'))
+           
+           
+           
+        </script>
+    </body>
+</html>

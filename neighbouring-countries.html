@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Neighbouring Countries</title>
+    </head>
+    <body>
+        <div id="root">
+
+        </div>
+
+        <script crossorigin src="https://unpkg.com/react@16/umd/react.development.js"></script>
+        <script crossorigin src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
+        <script crossorigin src="https://unpkg.com/@babel/standalone@7.15.5/babel.min.js"></script>
+        <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+        <style>
+         h1{
+              color:blue
+              
+}
+
+
+</style>
+
+        <script type="text/babel">
+            const rootHandle = document.getElementById("root")
+
+            const { useState, useEffect } = React
+
+            const CountriesList = (props) => {
+                const { countires, handleBorderCountries } = props
+
+                const [ country, setCountry ] = useState("")
+
+                const handleCountryChange = (e) => {
+                    const selectCountry = e.target.value
+                    setCountry(selectCountry)
+                    
+                    if ( selectCountry !== "" ){
+                        const borderCountries = countires.find(country => country.alpha3Code === selectCountry)
+                        const borders = borderCountries.borders
+                        const borderCountriesDetails = countires.filter(country => borders.includes(country.alpha3Code))
+                        handleBorderCountries(borderCountriesDetails)
+                    } else {
+                        handleBorderCountries([])
+                    }
+                }
+
+                return (
+                    <form>
+                        <label htmlFor="countries">Countries</label>
+                        <select name="countries" id="countries" value={country} onChange={handleCountryChange}>
+                            <option value="">Select Countries</option>
+                            { countires.map((country, i) => {
+                                return <option key={i} value={country.alpha3Code}>{country.name}</option>
+                            }) }
+                        </select>
+                    </form>
+                )
+            }
+
+            const ImgComponent = (props) => {
+                const { imgUrl, text } = props
+
+                return <img src={imgUrl} alt={text} width="75px" />
+            }
+
+            const TableComponent = (props) => {
+                const { borderCountries } = props
+
+                return (
+                    <div>
+                        { borderCountries.length > 0 &&
+                            <div>
+                                <h1>Neighbouring Countries -  {borderCountries.length}</h1>
+                                <table border="1px">
+                                    <thead>
+                                        <tr>
+                                            <th>Flag</th>
+                                            <th>Country</th>
+                                            <th>Capital</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        { borderCountries.map((country, i) => {
+                                            return (
+                                                <tr key={i}>
+                                                    <td><ImgComponent imgUrl={country.flag} text={country.alpha3Code}/></td>
+                                                    <td>{country.name}</td>
+                                                    <td>{country.capital}</td>
+                                                </tr>
+                                            )
+                                        }) }
+                                    </tbody>
+                                </table>
+                            </div>
+                        }
+                    </div>
+                )
+            }
+
+            const App = (prop) => {
+                const [ countires, setCountries ] = useState([])
+                const [ borderCountries, setBorderCountries ] = useState([])
+
+                useEffect(() => {
+                    axios.get('https://restcountries.com/v2/all')
+                        .then((response) => {
+                            setCountries(response.data)
+                        })
+                        .catch((err) => {
+                            alert("Countries Data not avaliable")
+                        })
+                }, [])
+
+                const handleBorderCountries = (borderCountries) => {
+                    setBorderCountries(borderCountries)
+                }
+
+                return (
+                    <div>
+                        <CountriesList countires={countires} handleBorderCountries={handleBorderCountries}/>
+                        <TableComponent borderCountries={borderCountries}/>
+                    </div>
+                )
+            }
+
+            ReactDOM.render(<App/>, rootHandle)
+        </script>
+        
+    </body>
+</html>

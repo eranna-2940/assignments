@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>
+            Sample Title 
+        </title>
+    </head>
+    <body>
+        <div id="root">
+
+        </div>
+        <script crossorigin src="https://unpkg.com/react@16/umd/react.development.js"></script>
+        <script crossorigin src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
+        <script crossorigin src="https://unpkg.com/babel-standalone@6.26.0/babel.js"></script>
+        <script src=" https://unpkg.com/axios/dist/axios.min.js"></script>
+
+        <script type="text/babel">
+           const rootHandle = document.getElementById('root')
+           const  {useState,useEffect} = React
+           function Display(props){
+               const {detail}=props
+               const [detailsArr,setDetailsArr]=useState([])
+               const url = `https://jsonplaceholder.typicode.com/${detail}`
+               useEffect(()=>{
+                   axios.get(url)
+                   .then((response)=>{
+                      // console.log(response.data)
+                       setDetailsArr(response.data)
+                   })
+               },[])
+              let headCount
+              if(detail=='users'){
+                  headCount=<h2> Users -{detailsArr.length}</h2>
+
+              }else if(detail=='posts'){
+                headCount=<h2> Posts - {detailsArr.length}</h2>
+              }else if(detail=='todos'){
+                headCount=<h2> Todos - {detailsArr.length}</h2>
+              }
+              return(
+                  <div>
+                      
+                    {headCount}
+
+                    
+                    
+                    </div>
+              )
+           }
+            function App(props){
+                const display=['users','posts','todos']
+                return(
+                    <div>
+                        <h1>Dashboard</h1>
+                        <hr/>
+                         {display.map((detail,id)=>{
+                             return <Display key={id} detail={detail} />
+                         })}
+                        </div>
+                )
+            }
+           ReactDOM.render(<App />,rootHandle)
+        </script>
+    </body>
+</html>

@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>
+            Sample Title 
+        </title>
+    </head>
+    <body>
+        <div id="root">
+
+        </div>
+        <script crossorigin src="https://unpkg.com/react@16/umd/react.development.js"></script>
+        <script crossorigin src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
+        <script crossorigin src="https://unpkg.com/babel-standalone@6.26.0/babel.js"></script>
+
+        <script type="text/babel">
+           const rootHandle = document.getElementById('root')
+           const {useState}=React
+
+           const tasks = [
+
+             ​{ id: 1, title: 'get the website live', completed: true },
+             ​{ id: 2, title: 'work on user validation', completed: false },
+             ​{ id: 3, title: 'automate the deployment process', completed: false }
+             
+            ]
+
+          const MarkCompleted=(props)=>{
+              const {tasks} = props
+             const [tasks, setTasks] = useState(tasks)
+
+         const comp =tasks.filter((ele)=>{
+             return ele.completed
+         })
+         const incomp = tasks.filter((ele)=>{
+             return !ele.completed
+         })
+           let count = 0
+           for(let ele of task){
+               if(ele.completed===true){
+                   count++
+               }
+           }
+           const handleCheck=(e,id)=>{
+               const result=tasks.map((ele,i)=>{
+                   if(id===ele.id){
+                       return {...ele,...{completed:!ele.completed}}
+
+                   }else{
+                       return {...ele}
+                   }
+               })
+               setTasks(result)
+           }
+           return (
+               <div>
+                  <h1>Listing Tasks - {tasks.length}</h1>
+                
+                <ul>
+                    {tasks.map((task)=>{
+                        return <li key={task.id}> <input type ="checkbox" value={task.completed} checked={task.completed} onChange={(e0vent)=>{handleCheck(event.task.id)}}/>
+                            {task.completed ? <s>{task.title}</s>:<span>{task.title}</span>}</li>
+                    })}
+                    </ul>
+                </div>
+           )
+        }
+        ReactDOM.render(<MarkCompleted tasks={tasks}/>,rootHandle)
+        </script>
+    </body>
+</html>

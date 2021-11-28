@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>
+            Sample Title 
+        </title>
+    </head>
+    <body>
+        <div id="root">
+
+        </div>
+        <script crossorigin src="https://unpkg.com/react@16/umd/react.development.js"></script>
+        <script crossorigin src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
+        <script crossorigin src="https://unpkg.com/babel-standalone@6.26.0/babel.js"></script>
+
+        <script type="text/babel">
+       // You are provided with an array of employees info
+       // Display them in a table format
+       // Next to each employee, provide a checkbox input
+       // When we click on the checkbox associated with an employee, show them as the selected employee
+           const rootHandle = document.getElementById('root')
+              const {useState}= React
+           function EmployeeInfomation(props){
+                 const [employees,SetEmployees]=useState([
+
+                         { id: 1, name: 'emp11', email: 'emp11@gmail.com', selected: false },
+
+                         { id: 2, name: 'emp12', email: 'emp12@gmail.com', selected: false },
+
+                         { id: 3, name: 'emp13', email: 'emp13@gmail.com', selected: false },
+
+                         { id: 4, name: 'emp14', email: 'emp14@gmail.com', selected: false }
+
+                ])
+
+ const [newEmployees,setNewEmployees]= useState([])
+ const handlecheck = (e,id)=>{
+     const result = employees.map((ele,i)=>{
+         if(id===ele.id){
+             return {...ele,...{selected:!ele.selected}}
+         }else{
+             return{...ele}
+         }
+     })
+     const newResult=result.filter((emp)=>{
+         return emp.selected===true
+     })
+     SetEmployees(result)
+     setNewEmployees(newResult)
+ }
+ return (
+     <div>
+         <h2>Listing Employees-{employees.length}</h2>
+         <table border = '1px'>
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>name</th>
+                    <th>email</th>
+                    <th>action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {employees.map((ele)=>{
+                        return <tr key ={ele.id}>
+                            <td>{ele.id}</td>
+                            <td>{ele.name}</td>
+                            <td>{ele.email}</td>
+                            <td><input type ="checkbox" value ={ele.selected} onChange ={()=>{handlecheck(event,ele.id)}} /></td>
+                            </tr>        
+                    })}
+                    
+                    </tbody>
+            </table>  
+            <h2>Selected Employees - {newEmployees.length}</h2>
+              <ul>
+                   {newEmployees.map((emp)=>{
+                       return <li key = {emp.id}>{emp.name}</li>
+                   })}
+                </ul>      
+        </div>
+ )
+           }
+           ReactDOM.render(<EmployeeInfomation />,rootHandle)
+        </script>
+    </body>
+</html>
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+           
+        
+

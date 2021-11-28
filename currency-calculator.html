@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+   <title>CURRENCY CALCULATOR</title>
+</head>
+
+<body>
+
+    <div id="root">
+    </div>
+
+
+    <script crossorigin src="https://unpkg.com/react@16/umd/react.development.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
+    <script crossorigin src="https://unpkg.com/babel-standalone@6.26.0/babel.js"></script>
+    <script src="https://unpkg.com/axios@0.21.4/dist/axios.min.js"></script>
+
+    <script type="text/babel">
+        const rootElement = document.getElementById('root');
+        const{useState,useEffect} = React;
+
+        function App(props){
+            return(
+                <div>
+
+                    
+                
+
+                    <div></div>
+
+                    <h2>
+                        USD to INR Converter
+                    </h2>
+                    <hr/>
+                    <UsdToInr/>
+
+                </div>
+            )
+        }
+
+        function UsdToInr(props){
+
+            const[usd,setUsd] = useState(0);
+            const[inr,setInr] = useState(0);
+
+            const baseUrl = 'https://exchange-rates.abstractapi.com/v1/live/?api_key=3518c32398614218a63aed3a3c8aad71&base=USD&target=INR';
+
+            const[usdValue,setUsdValue] = useState(0);
+
+            const useFunc = function(){
+                axios
+                    .get(baseUrl)
+
+                    .then(function(response){
+
+                        const fetchResult = response.data.exchange_rates.INR;
+
+                        setUsdValue(fetchResult);
+                    })
+
+                    .catch(function(error){
+                        console.log(error.message);
+                    })
+            }
+
+            useEffect(useFunc,[]);
+
+            const handleChange = function(e){
+
+                const inputValue = e.target.value;
+
+                const result = inputValue * usdValue;
+
+                setInr(result.toFixed(2));
+                setUsd(inputValue);
+            }
+
+            return(
+                <div>
+
+                    <h2>
+                        USD - {usd}
+                    </h2>
+
+                    <h3>
+                        INR - {inr}
+                    </h3>
+
+                    <form>
+                        
+                        <input type="range" value={usd} min='0' max='100' onChange={handleChange}/>
+                        
+                    </form>
+
+                    <p className='lead text-uppercase text-success'>
+                        note : 1 usd = {usdValue}
+                    </p>
+
+                </div>
+
+            )
+        }
+
+        ReactDOM.render(<App/>,rootElement);
+
+    </script>
+    
+</body>
+</html>

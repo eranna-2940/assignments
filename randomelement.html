@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>
+            Random element
+        </title>
+    </head>
+    <body>
+        <div id="root">
+
+        </div>
+        <script crossorigin src="https://unpkg.com/react@16/umd/react.development.js"></script>
+        <script crossorigin src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
+        <script crossorigin src="https://unpkg.com/babel-standalone@6.26.0/babel.js"></script>
+
+        <script type="text/babel">
+          // Create a component called as RandomElement
+          // You are provided with an array of fruits which you will pass as props to the component
+          // The component renders a button " Pick random "
+         //  When the user clicks on the button, pick a random element from the array and display using the alert() method
+          // The event handler function needs to be declared inside the component
+  const fruits = ['apple', 'water melon', 'strawberry', 'kiwi']
+           function RandomElement(props){
+                    
+                     function pick(){
+                        let n = (Math.floor(Math.random() * props.list.length))
+                    
+                           alert(props.list[n])
+                     }
+
+                     return(
+                         <div>
+                            <button onClick={pick}>Pick random</button>
+                            
+                            </div>
+                     )
+           }
+           
+           
+           ReactDOM.render(<RandomElement list={fruits}/>,document.getElementById('root'))
+        </script>
+    </body>
+</html>
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+           
+        
+

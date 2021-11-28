@@ -1,0 +1,64 @@
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>
+            Sample Title 
+        </title>
+    </head>
+    <body>
+        <div id="root">
+
+        </div>
+        <script crossorigin src="https://unpkg.com/react@16/umd/react.development.js"></script>
+        <script crossorigin src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
+        <script crossorigin src="https://unpkg.com/babel-standalone@6.26.0/babel.js"></script>
+
+
+        <script type="text/babel">
+           const rootHandle = document.getElementById('root')
+          // You are provided with an array of colors
+          // The array contains objects, with each object having a property color & symbols
+          // You will need to display the color name as a heading (h3) and the symbols in an ordered list (ol)
+          // The heading should be displayed in its own color
+const colors = [
+   { color: 'red', symbols: ['energy', 'strength', 'power', 'courage'] },
+   { color: 'blue', symbols: ['loyalty', 'trust', 'stability', 'confidence']},
+   { color: 'orange', symbols: ['excitment', 'fun', 'haste', 'action']},
+   { color: 'yellow', symbols: ['cheerfulness', 'happiness', 'joy', 'optimism']}
+]
+    
+             const ele = (
+                <div>
+                      
+                      <h1>All colors</h1>
+                      <ol>
+                        {colors.map(ele => {
+                          return <li>{ele.color.toUpperCase()}</li>
+                            
+                      })}
+                    </ol>
+                    
+                      <h1>All symbols</h1>
+                        <ol>
+                            {colors.map(ele=>{
+                                return (
+                                    <span style ={{color:`${ele.color}`}}>{ele.symbols.map(el=> <li>{el}</li>)}</span>
+                                )
+                            })}
+                            
+                            
+                            
+                            
+                            </ol>
+                
+
+         </div>
+
+
+
+             )
+            ReactDOM.render(ele, rootHandle)
+        </script>
+    </body>
+</html>

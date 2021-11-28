@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>
+            Bill Amount
+        </title>
+    </head>
+    <body>
+        <div id="root">
+
+        </div>
+        <script crossorigin src="https://unpkg.com/react@16/umd/react.development.js"></script>
+        <script crossorigin src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
+        <script crossorigin src="https://unpkg.com/babel-standalone@6.26.0/babel.js"></script>
+
+        <script type="text/babel">
+       // Create a BillPayment Component
+       // The component should render the radio buttons and an input field for the user to enter his mobile number
+       // The radio buttons represet a service provider eg - vodafone, airtel and jio
+       // The input field should have a placeholder present, letting the user know to enter his respective phone number
+       // By default vodafone has to be selected in the radio button
+       //  When the user changes to his service provider, the placeholder should indicate the same
+       // Example - if the user uses vodafone, then the placeholder text should be "enter your vodafone number", if the user is on jio, the placeholder text should be "enter your jio number"
+       // The title also has to change accordingly 
+           const rootHandle = document.getElementById('root')
+
+           const {useState}=React
+           
+           function Payment(props){
+           
+            const [network, setNetwork]= useState('vodafone')
+
+            const Networkchange = (e)=>{
+                const result = e.target.value
+                setNetwork(result)
+            }
+
+
+            return(
+                <div>
+                    <h1>Pay bill for {network}</h1>
+                    <hr/>
+                    <form>
+                    
+                    <input type="radio" name='network' value = 'vodafone' checked = {network=='vodafone'} onChange={Networkchange} /> vodafone <br/>
+                    <input type="radio" name='network' value = 'Airtel' checked = {network=='Airtel'} onChange={Networkchange} /> Airtel <br/>
+                    <input type="radio" name='network' value = 'Jio' checked = {network=='Jio'} onChange={Networkchange} /> Jio <br/>
+                    <input type="Number" placeholder = {`enter your ${network} number` } />
+                </form>
+                    </div>
+            )
+
+           }
+
+           
+           
+           ReactDOM.render(<Payment/>,rootHandle)
+        </script>
+    </body>
+</html>
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+           
+        
+

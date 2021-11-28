@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html>
+    <head>
+<title>
+
+</title>
+    </head>
+    <body>
+        <div id="root">
+
+        </div>
+        <script crossorigin src="https://unpkg.com/react@16/umd/react.development.js"></script>
+        <script crossorigin src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
+        <script crossorigin src="https://unpkg.com/babel-standalone@6.26.0/babel.js"></script>
+
+        <script src="https://unpkg.com/axios@0.21.4/dist/axios.min.js"></script>
+<script type="text/babel">
+const rootHandle=document.getElementById('root')
+const {useState,useEffect}=React
+function App(props){
+
+    const [tasks,setTasks]=useState([])
+    const total=tasks.slice(0)
+    const display=(list)=>{
+      //  console.log(list)
+        setTasks(list)
+    }
+
+    return <div>
+        <UserSelect display={display}/>
+
+    <DisplayUser tasks={tasks} setTasks={setTasks} total={total}/>
+        
+    
+        </div>
+}
+
+///Displaying users
+function UserSelect(props){
+    const {display}=props
+const [info,setInfo]=useState([])
+const [id,setId]=useState()
+const handleChange=(e)=>{
+    const id=e.target.value
+    setId(id)
+    axios.get(`https://jsonplaceholder.typicode.com/todos?userId=${id}`)
+    .then((res)=>{
+        const tasks=res.data
+       // console.log(tasks)
+        display(tasks)
+    })
+}
+    useState(()=>{
+        axios.get('https://jsonplaceholder.typicode.com/users')
+        .then((res)=>{
+            const result=res.data
+            
+            //console.log(result)
+            setInfo(result)
+
+        })
+        
+    },[])
+    
+    return <div>
+        <b>Users</b><select onChange={handleChange}>
+      <option >select user</option>
+            {
+ 
+                info.map((ele)=>{
+                    return <option key={ele.id} value={ele.id}> {ele.name}</option>
+                    
+                })
+
+            }
+        </select>
+        
+            
+       
+    
+</div>
+}
+
+
+//Displaying tasks
+function DisplayUser(props){
+    const {tasks,setTasks,total}=props
+    
+    console.log(total)
+   // console.log(tasks.length)
+   
+     return <div>
+            { tasks.length>0&&  <ul>
+                <h1>Listing Tasks</h1>
+                       {tasks.map((ele,i)=>{
+                        return   ele.completed?<li key={i} style={{textDecorationLine:'line-through'}}>{ele.title}</li>:<li>{ele.title}</li>
+                        
+                    })
+                 }
+                    </ul>}
+                    </div>
+       
+       }
+ReactDOM.render(<App/>,rootHandle)
+</script>
+    </body>
+</html>

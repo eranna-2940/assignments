@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>
+            Users data
+        </title>
+    </head>
+    <body>
+        <div id="root">
+
+        </div>
+        <script crossorigin src="https://unpkg.com/react@16/umd/react.development.js"></script>
+        <script crossorigin src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
+        <script crossorigin src="https://unpkg.com/babel-standalone@6.26.0/babel.js"></script>
+        <script src=" https://unpkg.com/axios/dist/axios.min.js"></script>
+
+        <script type="text/babel">
+           const rootHandle = document.getElementById('root')
+           const  {useState,useEffect} = React
+           const url = `https://jsonplaceholder.typicode.com/users`
+           function App(props){
+            const [users, setUsers] = useState([])
+               
+               
+               useEffect(()=>{
+                   axios.get(url)
+                   .then((response)=>{
+                       const result = response.data
+                          setUsers(result)
+                     })
+               },[])
+            
+            
+            
+                return(
+                    <div>
+                
+                        <h1>Listing users {users.length}</h1>
+                         
+                        
+                        <hr/>
+                        <table>
+
+                            
+                        <thead>
+                            <tr>
+                                
+                                <th>#</th>
+                                <th>name</th>
+                                <th>email</th>
+                                <th>city</th>
+                                <th>position</th>
+                                
+                                
+                                </tr>
+                            </thead>
+                            <tbody>
+                                   {users.map((ele)=>{
+                                       return(
+                                           <tr>
+                                            <td>{ele.id}</td>
+                                              <td>{ele.name}</td>
+                                              <td>{ele.email}</td>
+                                              <td>{ele.address.city}</td>
+                                              <td>{ele.address.geo.lat},</td>
+                                              <td>{ele.address.geo.lng}</td>
+                                            
+                                            
+                                            </tr>
+                                       )
+                                   })}
+                                
+                                </tbody>
+                        </table>  
+                    </div>
+                  
+                    
+                )
+            
+        }
+           ReactDOM.render(<App />,rootHandle)
+        </script>
+    </body>
+</html>

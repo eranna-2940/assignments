@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>
+            Sample Title 
+        </title>
+    </head>
+    <body>
+        <div id="root">
+
+        </div>
+        <script crossorigin src="https://unpkg.com/react@16/umd/react.development.js"></script>
+        <script crossorigin src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
+        <script crossorigin src="https://unpkg.com/babel-standalone@6.26.0/babel.js"></script>
+        <script src=" https://unpkg.com/axios/dist/axios.min.js"></script>
+
+        <script type="text/babel">
+        //You are provided with a list of colors
+        //Display the colors in a drop down
+       // When the user selects a color, change the background of the page to the selected colors.
+        //The colors are red, green, yellow, black, pink, orange
+           const rootHandle = document.getElementById('root')
+           const  {useState,useEffect} = React
+           
+           function BackgroundColor(props){
+               const [backColor,setBackColor]=useState('')
+               const [selectColor,setSelectColor]=useState(null)
+
+               const colors =['red','green','yellow','black','pink','orange']
+               useEffect(()=>{
+                   document.body.style.backgroundColor = backColor
+               },[backColor])
+
+               const handleColor=(e)=>{
+                   setBackColor(e.target.value)
+               }
+               return(
+                   <form>
+                        <select value={backColor} onChange={handleColor}>
+                            <option value="">select color</option>
+                            {colors.map((color,i)=>{
+                                return(
+                                    <option value ={color} key={i}>{color}</option>
+                                )
+                            })}
+                            </select>
+                    </form>
+               )
+           }
+           ReactDOM.render(<BackgroundColor />,rootHandle)
+        </script>
+    </body>
+</html>

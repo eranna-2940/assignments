@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>
+            Sample Title 
+        </title>
+    </head>
+    <body>
+        <div id="root">
+
+        </div>
+        <script crossorigin src="https://unpkg.com/react@16/umd/react.development.js"></script>
+        <script crossorigin src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
+        <script crossorigin src="https://unpkg.com/babel-standalone@6.26.0/babel.js"></script>
+        <script src=" https://unpkg.com/axios/dist/axios.min.js"></script>
+
+        <script type="text/babel">
+        //Create a controlled component
+        //When writing long text, we sometimes need a functionality where we can come back and continue where we left of.
+        //Enable a functionality where even if the page is closed or the page is reloaded, the text the user has entered is present in the input fields
+        //In case of form submission, the data should be cleared
+        //Also provide a button on the page, when the user clicks on the button, reload the page (hint - explore the window object reload method)
+           const rootHandle = document.getElementById('root')
+           const  {useState,useEffect} = React
+               function App(props){
+                   const [title,setTitle]=useState(
+                       localStorage.getItem('Title') || ''
+                   )
+                   const [storyBody,setStoryBody]=useState(
+                       localStorage.getItem('StoryBody') || ''
+                   )
+
+                   useEffect(()=>{
+                       localStorage.setItem('Title',title)
+                       localStorage.setItem('StoryBody',storyBody)
+
+                   },[title,storyBody])
+
+                   const handleSubmit=(e)=>{
+                       localStorage.clear()
+                   }
+                   const handleReload=()=>{
+                       window.location.reload()
+                   }
+                   return (
+                       <form onSubmit={handleSubmit}>
+                        <h1>Story Book</h1>
+                        <label>Title</label><br/>
+                        <input type="text" value={title} onChange={(e)=>setTitle(e.target.value)} /><br/>
+                        <label>Body</label><br/>
+                        <textarea value={storyBody} onChange={(e)=>setStoryBody(e.target.value)}></textarea><br/>
+                        <input type="submit" value='save' />
+                        <input type="button" value='reload' onClick={handleSubmit} />   
+                        </form>
+                   )
+               }
+           ReactDOM.render(<App />,rootHandle)
+        </script>
+    </body>
+</html>
